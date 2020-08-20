@@ -4,7 +4,7 @@ import 'home_controller.dart';
 
 class HomePage extends StatefulWidget {
   final String title;
-  const HomePage({Key key, this.title = "Home"}) : super(key: key);
+  const HomePage({Key key, this.title = "Meus Lugares"}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -16,11 +16,39 @@ class _HomePageState extends ModularState<HomePage, HomeController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
+      appBar: appBar(),
       body: Column(
         children: <Widget>[],
+      ),
+      floatingActionButton: floatingButton(),
+    );
+  }
+
+  Widget appBar() {
+    return AppBar(
+      title: Text(widget.title),
+      actions: [
+        IconButton(
+          icon: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
+          onPressed: () {
+            Modular.to.pushNamed('/form');
+          },
+        ),
+      ],
+    );
+  }
+
+  Widget floatingButton() {
+    return FloatingActionButton(
+      onPressed: () {
+        Modular.to.pushNamed('/form');
+      },
+      child: Icon(
+        Icons.add,
+        color: Colors.white,
       ),
     );
   }
