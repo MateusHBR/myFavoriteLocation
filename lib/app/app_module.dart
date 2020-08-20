@@ -1,3 +1,5 @@
+import 'package:my_favorite_location/app/modules/form/form_module.dart';
+
 import 'app_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
@@ -13,6 +15,11 @@ class AppModule extends MainModule {
   @override
   List<Router> get routers => [
         Router(Modular.initialRoute, module: HomeModule()),
+        Router(
+          '/form',
+          module: FormModule(),
+          transition: TransitionType.rightToLeft,
+        ),
       ];
 
   @override
