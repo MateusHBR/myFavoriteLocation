@@ -6,7 +6,7 @@ import 'form_page.dart';
 class FormModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => FormController()),
+        Bind((i) => FormController(i.get<StoreGreatePlaces>())),
       ];
 
   @override
