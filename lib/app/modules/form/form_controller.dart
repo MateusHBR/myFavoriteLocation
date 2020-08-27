@@ -9,6 +9,10 @@ part 'form_controller.g.dart';
 class FormController = _FormControllerBase with _$FormController;
 
 abstract class _FormControllerBase with Store {
+  final StoreGreatePlaces _storeGratePlaces;
+
+  _FormControllerBase(this._storeGratePlaces);
+
   @observable
   File storedImage;
 
