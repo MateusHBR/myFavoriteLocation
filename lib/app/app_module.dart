@@ -1,4 +1,5 @@
 import 'package:my_favorite_location/app/modules/form/form_module.dart';
+import 'package:my_favorite_location/app/shared/stores/store_greate_places.dart';
 
 import 'app_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -10,6 +11,7 @@ class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
         Bind((i) => AppController()),
+        Bind((i) => StoreGreatePlaces()),
       ];
 
   @override
