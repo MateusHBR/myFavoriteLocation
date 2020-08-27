@@ -82,6 +82,31 @@ abstract class _FormControllerBase with Store {
     }
   }
 
+  Future<void> selectOnMap({Function onError}) async {
+    try {
+      LatLng currentLocation = await getCurrentLocation();
+
+      final selectedPosition = await Modular.link.pushNamed('/map_screen',
+          arguments: [currentLocation, false]) as LatLng;
+
+      if (selectedPosition == null) {
+        return;
+      }
+      //...
+
+      staticMapImageURL = LocationUtil.generateLocationPreviewImage(
+        latitude: selectedPosition.latitude,
+        longitude: selectedPosition.longitude,
+      );
+    } on PlatformException catch (e) {
+      onError(e.code);
+    }
+  }
+
+  @action
+  void selectPosition(LatLng position) {
+    pickedPosition = position;
+  }
   void submitForm() {
     print('teste');
   }
