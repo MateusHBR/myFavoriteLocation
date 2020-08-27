@@ -17,6 +17,12 @@ abstract class _FormControllerBase with Store {
   File storedImage;
 
   @observable
+  var staticMapImageURL;
+
+  @observable
+  var savedImage;
+
+  @observable
   TextEditingController titleController = TextEditingController();
 
   @observable
@@ -32,19 +38,31 @@ abstract class _FormControllerBase with Store {
   }
 
   @action
-  Future<void> takePicture() async {
-    final ImagePicker _picker = ImagePicker();
+  Future<void> takePicture({Function onError}) async {
+    try {
+      final ImagePicker _picker = ImagePicker();
 
-    PickedFile imageFile = await _picker.getImage(
-      source: ImageSource.camera,
-      maxWidth: 600,
-    );
+      PickedFile imageFile = await _picker.getImage(
+        source: ImageSource.camera,
+        maxWidth: 600,
+      );
 
-    if (imageFile == null) {
-      return;
+      if (imageFile == null) {
+        return;
+      }
+
+      storedImage = File(imageFile.path);
+
+      final appDir = await getApplicationDocumentsDirectory();
+      String fileName = path.basename(storedImage.path);
+
+      savedImage = await storedImage.copy(
+        '${appDir.path}/$fileName',
+      );
+    } on PlatformException catch (e) {
+      onError(e.code);
     }
-
-    storedImage = File(imageFile.path);
+  }
   }
 
   void submitForm() {
