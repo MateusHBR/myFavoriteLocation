@@ -28,6 +28,9 @@ abstract class _FormControllerBase with Store {
   @observable
   String title = '';
 
+  @observable
+  LatLng pickedPosition;
+
   @action
   String onTextChange(String value) => title = value;
 
@@ -63,6 +66,20 @@ abstract class _FormControllerBase with Store {
       onError(e.code);
     }
   }
+  @action
+  Future<void> getCurrentUserLocation({Function onError}) async {
+    try {
+      final locationData = await Location().getLocation();
+
+      staticMapImageURL = LocationUtil.generateLocationPreviewImage(
+        latitude: locationData.latitude,
+        longitude: locationData.longitude,
+      );
+
+      pickedPosition = LatLng(locationData.latitude, locationData.longitude);
+    } on PlatformException catch (e) {
+      onError(e.code);
+    }
   }
 
   void submitForm() {
