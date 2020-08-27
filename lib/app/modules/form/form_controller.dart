@@ -108,6 +108,15 @@ abstract class _FormControllerBase with Store {
     pickedPosition = position;
   }
   void submitForm() {
-    print('teste');
+  Future<LatLng> getCurrentLocation() async {
+    LatLng currentLocation;
+
+    final Geolocator geolocator = Geolocator()..forceAndroidLocationManager;
+
+    Position position = await geolocator.getCurrentPosition();
+
+    currentLocation = LatLng(position.latitude, position.longitude);
+
+    return currentLocation;
   }
 }
