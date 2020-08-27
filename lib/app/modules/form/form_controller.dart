@@ -1,8 +1,18 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:location/location.dart';
 import 'package:mobx/mobx.dart';
+import 'package:my_favorite_location/app/shared/location_util/location_util.dart';
+import 'package:my_favorite_location/app/shared/stores/store_greate_places.dart';
+
+import 'package:path_provider/path_provider.dart';
+import 'package:path/path.dart' as path;
 
 part 'form_controller.g.dart';
 
@@ -66,6 +76,7 @@ abstract class _FormControllerBase with Store {
       onError(e.code);
     }
   }
+
   @action
   Future<void> getCurrentUserLocation({Function onError}) async {
     try {
@@ -107,7 +118,23 @@ abstract class _FormControllerBase with Store {
   void selectPosition(LatLng position) {
     pickedPosition = position;
   }
+
   void submitForm() {
+    if (storedImage == null ||
+        title.isEmpty ||
+        savedImage == null ||
+        pickedPosition == null ||
+        staticMapImageURL == null) {
+      return;
+    }
+
+    _storeGratePlaces.addPlace(title, savedImage, pickedPosition);
+
+    // pickedPosition = null;
+
+    Modular.to.pop();
+  }
+
   Future<LatLng> getCurrentLocation() async {
     LatLng currentLocation;
 
