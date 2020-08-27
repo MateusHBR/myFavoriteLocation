@@ -24,6 +24,37 @@ mixin _$FormController on _FormControllerBase, Store {
     });
   }
 
+  final _$staticMapImageURLAtom =
+      Atom(name: '_FormControllerBase.staticMapImageURL');
+
+  @override
+  dynamic get staticMapImageURL {
+    _$staticMapImageURLAtom.reportRead();
+    return super.staticMapImageURL;
+  }
+
+  @override
+  set staticMapImageURL(dynamic value) {
+    _$staticMapImageURLAtom.reportWrite(value, super.staticMapImageURL, () {
+      super.staticMapImageURL = value;
+    });
+  }
+
+  final _$savedImageAtom = Atom(name: '_FormControllerBase.savedImage');
+
+  @override
+  dynamic get savedImage {
+    _$savedImageAtom.reportRead();
+    return super.savedImage;
+  }
+
+  @override
+  set savedImage(dynamic value) {
+    _$savedImageAtom.reportWrite(value, super.savedImage, () {
+      super.savedImage = value;
+    });
+  }
+
   final _$titleControllerAtom =
       Atom(name: '_FormControllerBase.titleController');
 
@@ -55,12 +86,37 @@ mixin _$FormController on _FormControllerBase, Store {
     });
   }
 
+  final _$pickedPositionAtom = Atom(name: '_FormControllerBase.pickedPosition');
+
+  @override
+  LatLng get pickedPosition {
+    _$pickedPositionAtom.reportRead();
+    return super.pickedPosition;
+  }
+
+  @override
+  set pickedPosition(LatLng value) {
+    _$pickedPositionAtom.reportWrite(value, super.pickedPosition, () {
+      super.pickedPosition = value;
+    });
+  }
+
   final _$takePictureAsyncAction =
       AsyncAction('_FormControllerBase.takePicture');
 
   @override
-  Future<void> takePicture() {
-    return _$takePictureAsyncAction.run(() => super.takePicture());
+  Future<void> takePicture({Function onError}) {
+    return _$takePictureAsyncAction
+        .run(() => super.takePicture(onError: onError));
+  }
+
+  final _$getCurrentUserLocationAsyncAction =
+      AsyncAction('_FormControllerBase.getCurrentUserLocation');
+
+  @override
+  Future<void> getCurrentUserLocation({Function onError}) {
+    return _$getCurrentUserLocationAsyncAction
+        .run(() => super.getCurrentUserLocation(onError: onError));
   }
 
   final _$_FormControllerBaseActionController =
@@ -89,11 +145,25 @@ mixin _$FormController on _FormControllerBase, Store {
   }
 
   @override
+  void selectPosition(LatLng position) {
+    final _$actionInfo = _$_FormControllerBaseActionController.startAction(
+        name: '_FormControllerBase.selectPosition');
+    try {
+      return super.selectPosition(position);
+    } finally {
+      _$_FormControllerBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
   String toString() {
     return '''
 storedImage: ${storedImage},
+staticMapImageURL: ${staticMapImageURL},
+savedImage: ${savedImage},
 titleController: ${titleController},
-title: ${title}
+title: ${title},
+pickedPosition: ${pickedPosition}
     ''';
   }
 }
